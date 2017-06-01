@@ -34,50 +34,39 @@ package Frame;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-
 import static javafx.geometry.HPos.RIGHT;
 
 import java.io.File;
 import java.io.IOException;
-
-import javax.print.DocFlavor.URL;
-
 
 import Mains.Init;
 import Mains.quickSort;
 import Utils.baseUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * 框架类
+ * @author 罗渊
+ *
+ * 2017年6月1日
+ */
 public class Frame extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("快速排序小程序 @author 罗渊");
+        primaryStage.setTitle("快速排序小程序 ");
         primaryStage.setResizable(false);
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -87,10 +76,9 @@ public class Frame extends Application {
         
         final Text actiontarget = new Text();
         grid.add(actiontarget, 0, 10);
-        grid.setColumnSpan(actiontarget, 2);
-        grid.setHalignment(actiontarget, RIGHT);
+//        grid.setColumnSpan(actiontarget, 2);
+//        grid.setHalignment(actiontarget, RIGHT);
         actiontarget.setId("actiontarget");
-        
         
         Text scenetitle = new Text("快速排序");
         scenetitle.setId("welcome-text");
@@ -98,25 +86,49 @@ public class Frame extends Application {
 
         TextField userTextField = new TextField();
         grid.add(userTextField, 1, 1);
-
+        
         Button btn = new Button("生成用例");
         Button btn2 = new Button("选择用例");
         Button btn3 = new Button("排序");
+        Button btn5 = new Button("结果分析");
         grid.add(btn3, 3, 1);
+        
         btn.setOnAction((ActionEvent e) -> {
         	Stage stage=new Stage();
         	stage.setTitle("新增一个用例");
-        	stage.setWidth(300);
-        	stage.setHeight(200);
+        	stage.setWidth(400);
+        	stage.setHeight(250);
         	stage.setResizable(false);
         	GridPane gp = new GridPane();
         	TextField tf = new TextField(); 
         	Button btn4 = new Button("确定");
         	
+        	//添加三个按钮
+            RadioButton rb1 = new RadioButton("随机用例");  
+            RadioButton rb2 = new RadioButton("升序");   
+            RadioButton rb3 = new RadioButton("降序");   
+            RadioButton rb4 = new RadioButton("重复");   
             
-            gp.setPadding(new Insets(50, 50, 50, 50));
-            gp.add(tf, 8, 12);
-        	gp.add(btn4, 14, 12);
+            ToggleGroup group = new ToggleGroup();   
+            rb1.setStyle("-fx-base: lightgreen;");
+            rb2.setStyle("-fx-base: lightblue;");
+            rb3.setStyle("-fx-base: salmon;");
+            rb4.setStyle("-fx-base: lightgreen;");
+            rb1.setToggleGroup(group);   
+            rb1.setSelected(true);   
+            rb2.setToggleGroup(group);   
+            rb3.setToggleGroup(group); 
+            rb4.setToggleGroup(group); 
+            
+            gp.setHgap(2);
+            gp.setVgap(1);
+            gp.setPadding(new Insets(30, 25, 30, 25));
+            gp.add(tf, 4, 12);
+        	gp.add(btn4, 10, 12);
+            gp.add(rb1,4,80);
+            gp.add(rb2,5,80);
+            gp.add(rb3,10,80);
+            gp.add(rb4,15,80);
         	Scene sc = new Scene(gp);
         	sc.getStylesheets().add(Frame.class.getResource("second.css").toExternalForm());
         	stage.setScene(sc);
@@ -128,7 +140,6 @@ public class Frame extends Application {
 //                	//显示进度条
                     ProgressBar pb = new ProgressBar(0.6);  
                 	sc.setRoot(pb);
-                	
                 	
                 	//输出路径
                 	String output = Init.creatText(Integer.parseInt(tf.getText()));
@@ -167,8 +178,8 @@ public class Frame extends Application {
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         hbBtn.getChildren().add(btn);
         hbBtn.getChildren().add(btn2);
+        hbBtn.getChildren().add(btn5);
         grid.add(hbBtn, 1, 4);
-
 
         Scene scene = new Scene(grid, 700, 550);
         primaryStage.setScene(scene);

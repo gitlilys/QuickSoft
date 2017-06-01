@@ -4,6 +4,12 @@ import java.io.IOException;
 
 import Utils.baseUtils;
 
+/**
+ * 
+ * @author 罗渊
+ *
+ * 2017年6月1日
+ */
 public class Init {
 
 	public static String creatText(int n) {
@@ -16,12 +22,6 @@ public class Init {
 			output = "生成成功！生成" + v.length + "个随机数！" + "\n" +
 					"路径：" + URL;
 			
-			//执行快速排序
-//			int[] sortV = qSort(v);
-			//排序完的数组写入文件
-//			String sortURL = baseUtils.save2File(sortV);
-//			System.out.println("排序成功！");
-//			System.out.println("路径：" + URL);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

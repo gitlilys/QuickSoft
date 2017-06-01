@@ -1,14 +1,23 @@
 package Utils;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.UUID;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemover;
+import org.junit.Test;
 
 
 /**
@@ -30,7 +39,7 @@ public class baseUtils {
 	public static int[] getRandomIntArray(int n) {
 		int[] a = new int[n];
 		for(int i = 0; i < a.length; i++) {
-			a[i] = random.nextInt(10000);
+			a[i] = random.nextInt(1000000);
 		}
 		return a;
 	}
@@ -69,8 +78,29 @@ public class baseUtils {
 	
 	//读文件到一个int数组
 	public static int[] read2Array(String url) {
-		
-		return null;
+		File file = new File(url);
+		FileReader fr;
+		int[] n = null;
+		try {
+			fr = new FileReader(file);
+			BufferedReader br = new BufferedReader(fr);
+			ArrayList<Integer> ar = new ArrayList<Integer>();
+			String str = "";
+			while((str=br.readLine()) != null) {
+				ar.add(Integer.parseInt(str));
+			}
+			Integer[] it = new Integer[ar.size()];
+			ar.toArray(it);
+			n = ArrayUtils.toPrimitive(it);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return n;
+	}
+	
+	//得到一个UUID
+	public static String getUUID() {
+		return UUID.randomUUID().toString();
 	}
 	
 	
