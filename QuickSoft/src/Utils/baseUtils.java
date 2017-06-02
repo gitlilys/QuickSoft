@@ -20,6 +20,7 @@ import org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemover;
 import org.junit.Test;
 
 
+
 /**
  * 工具类
  * @author 罗渊
@@ -64,7 +65,7 @@ public class baseUtils {
 
 	//存储数组到文件
 	public static String save2File(int[] n) throws IOException {
-		String fileName = "d:\\" + n.length  + ".txt";
+		String fileName = "d:\\" + "\\" + n.length  + ".txt";
 		File file = new File(fileName);
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);

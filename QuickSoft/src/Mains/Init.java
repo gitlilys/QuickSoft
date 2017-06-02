@@ -12,7 +12,8 @@ import Utils.baseUtils;
  */
 public class Init {
 
-	public static String creatText(int n) {
+
+	public static String creatRandomText(int n) {
 		String output = "";
 		try {
 			//生成一个长度为n的随机数组

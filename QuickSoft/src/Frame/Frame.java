@@ -41,6 +41,7 @@ import java.io.IOException;
 
 import Mains.Init;
 import Mains.quickSort;
+import Mains.sort;
 import Utils.baseUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -142,7 +143,7 @@ public class Frame extends Application {
                 	sc.setRoot(pb);
                 	
                 	//输出路径
-                	String output = Init.creatText(Integer.parseInt(tf.getText()));
+                	String output = Init.creatRandomText(Integer.parseInt(tf.getText()));
                     actiontarget.setText(output);
                     stage.close();
                 }
@@ -163,8 +164,12 @@ public class Frame extends Application {
         btn3.setOnAction((ActionEvent e) -> {  
         	System.out.println(userTextField.getText());
         	quickSort qs = new quickSort();
+
+        	//测试
+        	sort  s = new sort();
         	int[] v = baseUtils.read2Array(userTextField.getText());
-        	qs.qSort(v);
+//        	qs.qSort(v);
+        	s.qSort(v);
         	try {
 				String url = baseUtils.save2File(v);
                 actiontarget.setText("排序成功！\n" + "路径：" + url);
