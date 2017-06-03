@@ -72,8 +72,8 @@ public class baseUtils {
 	public static int[] getRepeatIntArray(int n) {
 		int[] a = new int[n];
 		int temp = random.nextInt(10000);
-		for(int i = 0; i < a.length; ) {
-			a[i] = temp;
+		for(int i = 0; i < a.length; i++) {
+			a[i] = 1;
  		}
 		return a;
 	}
@@ -98,8 +98,9 @@ public class baseUtils {
 	}
 
 	//存储数组到文件
-	public static String save2File(int[] n) throws IOException {
-		String fileName = "d:\\" + "\\" + n.length  + ".txt";
+	public static String save2File(int[] n, String tp) throws IOException {
+		String type = tp;
+		String fileName = "d:\\快排测试\\" + type + "." + n.length  + ".txt";
 		File file = new File(fileName);
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);
