@@ -60,7 +60,7 @@ public class Frame extends Application {
 		grid.setPadding(new Insets(25, 25, 25, 25));
 
 		final Text actiontarget = new Text();
-		grid.add(actiontarget, 0, 10);
+		grid.add(actiontarget, 1, 6);
 		actiontarget.setId("actiontarget");
 		Text scenetitle = new Text("快速排序");
 		scenetitle.setId("welcome-text");
@@ -119,10 +119,7 @@ public class Frame extends Application {
 			btn4.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
-					// 显示进度条
-					ProgressBar pb = new ProgressBar(0.6);
-					sc.setRoot(pb);
-
+					
 					// 输出路径
 					String output = "";
 					if (rb1.isSelected()) {
