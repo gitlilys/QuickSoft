@@ -100,8 +100,18 @@ public class baseUtils {
 	//存储数组到文件
 	public static String save2File(int[] n, String tp) throws IOException {
 		String type = tp;
-		String fileName = "d:\\快排测试\\" + type + "." + n.length  + ".txt";
-		File file = new File(fileName);
+		String path = "f:\\快排测试";
+		File file = new File(path);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		String fileName = path + "\\" + type + "." + n.length  + ".txt";
+		file = new File(path);
+		try {    
+		    file = new File(fileName);
+		} catch (Exception e) {    
+		    file.createNewFile();    
+		}    
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);
 		for(int i = 0; i < n.length; i++) {
