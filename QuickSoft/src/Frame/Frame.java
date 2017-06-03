@@ -1,61 +1,44 @@
-/*
- * Copyright (c) 2012, 2014 Oracle and/or its affiliates.
- * All rights reserved. Use is subject to license terms.
- *
- * This file is available and licensed under the following license:
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *  - Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *  - Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the distribution.
- *  - Neither the name of Oracle nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 package Frame;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import static javafx.geometry.HPos.RIGHT;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
+import DB.DataOperation;
 import Mains.Init;
 import Mains.quickSort;
-import Mains.sort;
 import Utils.baseUtils;
+import entity.Entity;
+import entity.ReadEntity;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sun.security.util.Length;
 
 /**
  * 框架类
@@ -77,10 +60,7 @@ public class Frame extends Application {
         
         final Text actiontarget = new Text();
         grid.add(actiontarget, 0, 10);
-//        grid.setColumnSpan(actiontarget, 2);
-//        grid.setHalignment(actiontarget, RIGHT);
         actiontarget.setId("actiontarget");
-        
         Text scenetitle = new Text("快速排序");
         scenetitle.setId("welcome-text");
         grid.add(scenetitle, 0, 0, 2, 1);
@@ -138,7 +118,7 @@ public class Frame extends Application {
         	btn4.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
-//                	//显示进度条
+                	//显示进度条
                     ProgressBar pb = new ProgressBar(0.6);  
                 	sc.setRoot(pb);
                 	
@@ -166,10 +146,13 @@ public class Frame extends Application {
         	quickSort qs = new quickSort();
 
         	//测试
-        	sort  s = new sort();
         	int[] v = baseUtils.read2Array(userTextField.getText());
-//        	qs.qSort(v);
-        	s.qSort(v);
+        	long currentTime1 = System.nanoTime();
+        	qs.qSort(v,0,v.length-1);
+        	long currentTime2 = System.nanoTime();
+        	double time = baseUtils.nanoTime2MillsTime(currentTime2-currentTime1);
+        	String type = "1";
+        	DataOperation.saveEntity(type, v.length, time);
         	try {
 				String url = baseUtils.save2File(v);
                 actiontarget.setText("排序成功！\n" + "路径：" + url);
@@ -178,6 +161,58 @@ public class Frame extends Application {
 			}
         });  
        
+        //结果分析-->输出一个表格显示数据
+        btn5.setOnAction((ActionEvent e) -> {  
+        	Stage stage=new Stage();
+        	stage.setTitle("新增一个用例");
+        	stage.setWidth(450);
+        	stage.setHeight(500);
+        	stage.setResizable(false);
+        	TableView table = new TableView();  
+            Scene scene = new Scene(new Group());   
+            final Label label = new Label("结果分析");  
+            label.setFont(new Font("Microsoft YaHei", 20));  
+            table.setEditable(true);  
+            
+            //添加数据
+            final ObservableList<ReadEntity> data =  
+                    FXCollections.observableArrayList(  
+                     
+            );  
+            
+            TableColumn NameCol1 = new TableColumn("用例类型");  
+            NameCol1.setMinWidth(100); 
+            NameCol1.setCellValueFactory(  
+                    new PropertyValueFactory<>("type")  
+            );
+            TableColumn NameCol2 = new TableColumn("大小");  
+            NameCol2.setMinWidth(100);  
+            NameCol2.setCellValueFactory(  
+                    new PropertyValueFactory<>("size")  
+            );
+            TableColumn NameCol3 = new TableColumn("用时");  
+            NameCol3.setMinWidth(200);  
+            NameCol3.setCellValueFactory(  
+                    new PropertyValueFactory<>("time")  
+            );
+            
+            List<Entity> list = DataOperation.serachFromDB();
+            Iterator<Entity> it = list.iterator();
+            while(it.hasNext()) {
+            	Entity t = it.next();
+            	data.add(new ReadEntity(t.getType(), Integer.toString(t.getSize()), Double.toString(t.getTime())+"ms"));
+            }
+            
+            table.setItems(data);  
+            table.getColumns().addAll(NameCol1, NameCol2, NameCol3);  
+            final VBox vbox = new VBox();  
+            vbox.setSpacing(5);  
+            vbox.setPadding(new Insets(10, 0, 0, 10));
+            vbox.getChildren().addAll(label, table);  
+            ((Group) scene.getRoot()).getChildren().addAll(vbox);  
+            stage.setScene(scene);  
+            stage.show();  
+        }); 
 		
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);

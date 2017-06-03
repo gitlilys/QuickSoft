@@ -31,12 +31,14 @@ public class baseUtils {
 
 	static Scanner sc = new Scanner(System.in);
 	static Random random = new Random();
+	
 
 	//得到一个字符串
 	public static int getIntNumber() {
 		return sc.nextInt(); 
 	}
 	
+	//得到一个随机数数组
 	public static int[] getRandomIntArray(int n) {
 		int[] a = new int[n];
 		for(int i = 0; i < a.length; i++) {
@@ -44,7 +46,39 @@ public class baseUtils {
 		}
 		return a;
 	}
+	
+	
+	//得到升序数组
+	public static int[] getAscendIntArray(int n) {
+		int[] a = new int[n];
+		for(int i = 0; i < a.length; i++) {
+			a[i] = i+1;
+		}
+		return a;
+	}
+	
+	
+	//得到降序数组
+	public static int[] getDescendIntArray(int n) {
+		int[] a = new int[n];
+		for(int i = 0; i < a.length; i++) {
+			a[i] = a.length-i;
+		}
+		return a;
+	}
 
+	
+	//得到重复数组
+	public static int[] getRepeatIntArray(int n) {
+		int[] a = new int[n];
+		int temp = random.nextInt(10000);
+		for(int i = 0; i < a.length; ) {
+			a[i] = temp;
+ 		}
+		return a;
+	}
+	
+	
 	//打印数组
 	public static void print(int[] n) {
 		String str = "";
@@ -102,6 +136,21 @@ public class baseUtils {
 	//得到一个UUID
 	public static String getUUID() {
 		return UUID.randomUUID().toString();
+	}
+
+	//将纳秒转化为毫秒
+	public static double nanoTime2MillsTime(long time) {
+		int length = 0;
+		long temp = time;
+		while(temp > 0) {
+			length++;
+			temp /= 10;
+		}
+		long z = time / 1000000;
+		long x = time % 1000000;
+		x = Long.parseLong(Long.toString(x).substring(0, 3));
+		String str = z + "." + x;
+		return Double.parseDouble(str);
 	}
 	
 	
