@@ -6,6 +6,6 @@
 	<classpathentry kind="lib" path="lib/commons-dbutils-1.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="E:/Java工具/jar包/commons-lang3-3.5/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="F:/我的文档/jar包/commons-lang3-3.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

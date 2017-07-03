@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-06-01 20:04:54
+Date: 2017-06-04 00:56:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,13 +20,9 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `result`;
 CREATE TABLE `result` (
-  `id` int(11) NOT NULL,
-  `type` varchar(255) DEFAULT NULL COMMENT '鏁版嵁绫诲瀷',
-  `size` varchar(0) DEFAULT NULL COMMENT '鏁版嵁澶у皬',
-  `time` varchar(0) NOT NULL COMMENT '鐢ㄦ椂',
+  `id` varchar(100) NOT NULL,
+  `type` varchar(255) DEFAULT NULL COMMENT '数据类型',
+  `size` varchar(100) DEFAULT NULL COMMENT '数据大小',
+  `time` varchar(100) NOT NULL COMMENT '用时',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of result
--- ----------------------------
