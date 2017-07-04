@@ -76,7 +76,7 @@ public class quickSort {
 	 	    //先换左边，把前面key相等的元素从low-1依次降序放在low之前
 	 	    int i = low - 1;
 	 	    int j = lowRecord;  
-	 	    while(j < leftLen && n[i] == key)  
+	 	    while(j < left && n[i] != key)  
 	 	    {  
 	 	        swap(n, i, j); 
 	 	        i--;  
@@ -86,7 +86,7 @@ public class quickSort {
 	 	    //再换右边，把和key相等的元素从low+1依次升序放在low之后(升序、降序指下标)
 	 	    i = low + 1;  
 	 	    j = highRecord;
-	 	    while(j < rightLen && n[i] == key)  
+	 	    while(j > right && n[i] != key)  
 	 	    {  
 	 	    	swap(n, i, j);   
 	 	        i++;  

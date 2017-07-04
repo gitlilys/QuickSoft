@@ -73,7 +73,7 @@ public class baseUtils {
 		int[] a = new int[n];
 		int temp = random.nextInt(10000);
 		for(int i = 0; i < a.length; i++) {
-			a[i] = 1;
+			a[i] = temp;
  		}
 		return a;
 	}
